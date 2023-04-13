@@ -23,9 +23,10 @@ console.log(figlet.textSync("Dir Manager"));
 program 
     .version("1.0.0")
     .description("A CLI for managing a directory") 
-    .option("-l, --ls [value]", "List all files in the directory") 
+    .option("-l, --list [value]", "List all files in the directory") 
     .option("-m, --mkdir <value>", "Create a new directory")
     .option("-t, --touch <value>", "Create a new file")
+    .option("-r, --remove <value>", "Remove a file or directory")
     .parse(process.argv); 
 // Uses the program variable that contains the Commander instance to invoke the version() method
 // The version() method takes a string containing the version of the CLI
@@ -93,8 +94,13 @@ function createFile(filepath: string) {
     // Then we log a success message
 }
 
+function removeFile(filepath: string) {
+    fs.unlinkSync(filepath); 
+    console.log("The file has been removed");
+}
+
 // Now we check if the user has called the function 
-if (options.ls) {
+if (options.list) {
     const filepath = typeof options.ls === "string" ? options.ls : __dirname; 
     listDirContents(filepath); 
 }
@@ -111,6 +117,10 @@ if (options.touch) {
 }
 // This checks if the user has used the -t or --touch option.
 // createFile() is now invoked with the full path to the file.
+
+if (options.remove) {
+    removeFile(path.resolve(__dirname, options.remove)); 
+}
 
 if(!process.argv.slice(2).length) {
     program.outputHelp(); 

@@ -98,6 +98,8 @@ function removeFile(filepath: string) {
     fs.unlinkSync(filepath); 
     console.log("The file has been removed");
 }
+// The unlinkSync() method takes the filepath as an argument and removes the file synchronously.
+// Then we log a success message
 
 // Now we check if the user has called the function 
 if (options.list) {
@@ -121,6 +123,8 @@ if (options.touch) {
 if (options.remove) {
     removeFile(path.resolve(__dirname, options.remove)); 
 }
+// This checks if the user has used the -r or --remove option.
+// removeFile() is now invoked with the full path to the file.
 
 if(!process.argv.slice(2).length) {
     program.outputHelp(); 
